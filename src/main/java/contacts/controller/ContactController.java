@@ -1,31 +1,36 @@
 package contacts.controller;
 
 
-import contacts.ContactRepository;
+import contacts.persistence.ContactRepository;
 import contacts.domain.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping(value = "/")
 public class ContactController {
 
     private ContactRepository contactRepository;
 
     @Autowired
-    ContactController(ContactRepository contactRepository){
+    public ContactController(ContactRepository contactRepository){
         this.contactRepository = contactRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getContacts(Model model){
+    public String getContacts(Map<String, Object> map){
+        System.out.println("----------- reached get method in controller ------- ");
         List<Contact> contacts = contactRepository.getAllContacts();
-        model.addAttribute("contacts", contacts);
+        System.out.println("Contacts : " + contacts.size());
+//        model.addAttribute("contacts", contacts);
+        map.put("contacts", contacts);
         return "home";
     }
 

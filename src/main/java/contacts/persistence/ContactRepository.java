@@ -1,4 +1,4 @@
-package contacts;
+package contacts.persistence;
 
 import contacts.domain.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ContactRepository {
     public List<Contact> getAllContacts() {
 
         return jdbcTemplate.query(
-                "select id, firstName, lastName, phoneNumer, emailAddress " +
+                "select id, firstName, lastName, phoneNumber, emailAddress " +
                         "from contacts order by lastName",
                 new RowMapper<Contact>() {
                     @Override
